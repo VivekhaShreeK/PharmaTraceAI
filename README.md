@@ -1,170 +1,38 @@
 # 💊 PharmaTrace AI
 
-### Intelligent Medicine Quality Testing, Authentication & Supply Chain Monitoring System
+### Intelligent Medicine Authentication & Risk Management System
+
+PharmaTrace AI is a web-based medicine authentication system designed to help users verify the authenticity of medicines using **Batch IDs and QR codes**.
+
+The main goal of the project is to reduce the risk associated with counterfeit or suspicious medicines by providing a simple and accessible digital verification system.
+
+🌐 **Live Demo:** https://pharmatrace-web-server.onrender.com
 
 ---
 
-## 🚀 Quick Start (5 Steps)
+## 🎯 Problem Statement
 
-### Prerequisites
+Counterfeit medicines are a serious problem in the pharmaceutical industry.
 
-- Node.js v18+
-- PostgreSQL 14+
-- Python 3.9+
+A fake medicine can look very similar to a genuine product, making it difficult for customers, pharmacies, and distributors to identify it through visual inspection alone.
+
+Traditional verification methods can also be time-consuming and difficult for regular users.
+
+PharmaTrace AI addresses this problem by providing a digital platform where medicine information can be verified using a unique **Batch ID or QR code**.
 
 ---
 
-### Step 1 — Install Node Dependencies
+## 💡 Our Solution
 
-```bash
-cd pharmatrace-ai
-npm install
-Step 2 — Create PostgreSQL Database
-psql -U postgres -c "CREATE DATABASE pharmatrace;"
-psql -U postgres -d pharmatrace -f sql/schema.sql
-Step 3 — Configure Environment
+PharmaTrace AI provides a simple verification workflow:
 
-Edit .env with your database password:
-
-DB_HOST=localhost
-DB_PORT=5432
-DB_NAME=pharmatrace
-DB_USER=postgres
-DB_PASSWORD=YOUR_PASSWORD_HERE
-SESSION_SECRET=pharmatrace_super_secret_2024
-PORT=3000
-AI_SERVICE_URL=http://localhost:5001
-Step 4 — Start AI Microservice (Terminal 1)
-cd ai_service
-pip install -r requirements.txt
-python fraud_detection.py
-# Running on http://localhost:5001
-Step 5 — Start Main Server (Terminal 2)
-cd ..
-node server.js
-# Running on http://localhost:3000
-Open Browser
-http://localhost:3000
-👤 Test Accounts
-
-Register accounts via the UI at /register, then set admin role manually:
-
-UPDATE users SET role='admin' WHERE email='admin@yourdomain.com';
-Role	Purpose
-admin	Full system access, analytics, alert management
-manufacturer	Register medicine batches, view own inventory
-inspector	Submit quality test results
-distributor	Transfer medicines in supply chain
-pharmacy	Receive and confirm medicines
-hospital	Receive medicines from pharmacy
-consumer	Verify medicines via QR/Batch ID
-🗂️ Project Structure
-pharmatrace-ai/
-├── server.js               # Main Express server
-├── package.json
-├── .env                    # Environment config
-├── config/
-│   └── database.js         # PostgreSQL pool
-├── routes/
-│   ├── authRoutes.js
-│   ├── medicineRoutes.js
-│   ├── testingRoutes.js
-│   ├── supplyRoutes.js
-│   └── adminRoutes.js
-├── controllers/
-│   ├── authController.js
-│   ├── medicineController.js
-│   ├── testingController.js
-│   ├── supplyController.js
-│   └── alertController.js
-├── models/
-│   ├── userModel.js
-│   ├── medicineModel.js
-│   └── testModel.js
-├── views/
-│   ├── partials/navbar.ejs
-│   ├── login.ejs
-│   ├── register.ejs
-│   ├── dashboard.ejs
-│   ├── medicines.ejs
-│   ├── addMedicine.ejs
-│   ├── testMedicine.ejs
-│   ├── verifyMedicine.ejs
-│   ├── supplyChain.ejs
-│   ├── supplyHistory.ejs
-│   ├── alerts.ejs
-│   ├── adminAnalytics.ejs
-│   ├── adminUsers.ejs
-│   ├── adminInventory.ejs
-│   └── 404.ejs
-├── public/
-│   ├── css/style.css
-│   ├── js/charts.js
-│   └── qrcodes/            # Auto-generated QR code images
-├── ai_service/
-│   ├── fraud_detection.py  # Flask + IsolationForest
-│   └── requirements.txt
-└── sql/
-    └── schema.sql          # PostgreSQL schema
-🌐 Application Routes
-URL	Description
-/	Redirects to login or dashboard
-/login	Login page
-/register	Registration page
-/dashboard	Main dashboard
-/medicines	List all batches
-/medicines/add	Register new batch
-/testing	Quality testing form
-/supply	Initiate transfer
-/supply/history	Transfer history
-/verify	Public verification page
-/verify/:batchId	Direct batch verification
-/admin/analytics	Analytics dashboard (admin)
-/admin/alerts	Alert management (admin)
-/admin/users	User management (admin)
-/admin/inventory	Inventory overview (admin)
-/admin/api/who-verify/:id	WHO mock API
-✅ Features Implemented
-Feature	Status
-User Registration & Login (bcrypt)	✅
-7 Roles with Session-based RBAC	✅
-Medicine Batch Registration	✅
-QR Code Auto-Generation	✅
-Quality Testing Algorithm	✅
-Auto Approve/Reject on Test	✅
-Counterfeit Detection (Duplicate Batch ID)	✅
-4 Severity Alert System	✅
-Supply Chain Transfer	✅
-Delivery Confirmation	✅
-Inventory Management	✅
-Public Verification Page	✅
-Supply Chain Timeline	✅
-Admin Analytics + Charts	✅
-AI Anomaly Detection (IsolationForest)	✅
-Automation Engine (Hourly Checks)	✅
-WHO Mock API Integration	✅
-Packaging Information	✅
-🔬 Quality Algorithm
-IF purity_percentage >= 80
-   AND sterility_status = PASS
-   AND contamination_flag = false
-→  Result = SAFE → Medicine APPROVED
-
-ELSE
-→  Result = DEFECTIVE → Medicine REJECTED
-   + Alerts generated for each violation
-🤖 AI Microservice API
-Endpoint	Method	Description
-/health	GET	Health check
-/analyze	POST	Analyze single batch
-/analyze/batch	POST	Analyze multiple batches
-/results	GET	Get all analysis results
-/results/clear	POST	Clear results
-🏗️ Architecture
-[Browser] → [Express.js :3000]
-                 ↕
-          [PostgreSQL DB]
-                 ↕
-         [Flask AI :5001]
-                 ↕
-      [/public/qrcodes/ (QR images)]
+```text
+Medicine
+   ↓
+Batch ID / QR Code
+   ↓
+PharmaTrace AI
+   ↓
+Medicine Information Verification
+   ↓
+Verification Result
