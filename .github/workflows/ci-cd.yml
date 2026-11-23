@@ -47,4 +47,4 @@ jobs:
             echo "Render deploy hook secret is missing."
             exit 1
           fi
-          curl --fail --silent --show-error -X POST "$RENDER_DEPLOY_HOOK_URL"
+          curl --fail --silent --show-error "$RENDER_DEPLOY_HOOK_URL"
